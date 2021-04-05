@@ -25,4 +25,5 @@ class Welcome extends CI_Controller {
 		$data['page']='front/halte';
 		$this->load->view('front/awal',$data);
 	}
+	
 }
