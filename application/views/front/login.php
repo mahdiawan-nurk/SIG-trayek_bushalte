@@ -46,9 +46,9 @@ label {
 <div class="kotak_login">
   <p class="tulisan_login">Silahkan login</p>
 
-  <form>
+  <form action="autentikasi.html" method="post">
     <label>Username</label>
-    <input type="text" name="username" class="form_login" placeholder="Username atau email ..">
+    <input type="text" name="email" class="form_login" placeholder="Username atau email ..">
 
     <label>Password</label>
     <input type="text" name="password" class="form_login" placeholder="Password ..">

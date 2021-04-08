@@ -8,6 +8,12 @@ class Admin extends CI_Controller {
 		$this->load->view('backend/login');
 	}
 
+	function utama()
+	{
+		$this->load->view('backend/template');
+	}
+
+
 }
 
 /* End of file Admin.php */

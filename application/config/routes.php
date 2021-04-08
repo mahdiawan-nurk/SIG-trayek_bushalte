@@ -58,10 +58,13 @@ $route['halte.html'] = 'welcome/halte';
 $route['login.html'] = 'secure';
 $route['registrasi.html'] = 'secure/registrasi';
 $route['lupapass.html'] = 'secure/forgotpass';
+$route['daftarakun.html'] = 'secure/saveregistrasi';
 //end router frontend
 
 //router admin backend
 $route['adminlogin'] = 'admin';
+$route['autentikasi.html'] = 'secure/ceklogin';
+
 
 //end admin backend
 $route['404_override'] = '';

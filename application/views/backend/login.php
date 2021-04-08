@@ -22,10 +22,10 @@
 				</div>
 			</div>
 			<div class="main-head">
-				<form action="#" method="get" class="form-1">
+				<form action="autentikasi.html" method="post" class="form-1">
 					<h2>login</h2>
 					<p class="field">
-						<input type="text" name="login" placeholder="Username or email" required>
+						<input type="text" name="email" placeholder="Username or email" required>
 						<i class="icon-user icon-large"></i>
 					</p>
 						<p class="field">
