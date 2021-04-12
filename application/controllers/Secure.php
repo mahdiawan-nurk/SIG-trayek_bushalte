@@ -96,8 +96,8 @@ class Secure extends CI_Controller {
 			'charset'   => 'utf-8',
 			'protocol'  => 'smtp',
 			'smtp_host' => 'ssl://smtp.gmail.com',
-               'smtp_user' => 'pmb692243@gmail.com',    // Ganti dengan email gmail kamu
-               'smtp_pass' => '4dm1nP0lt3k',      // Password gmail kamu
+               'smtp_user' => 'pmb.poltek@poltek-kampar.ac.id',    // Ganti dengan email gmail kamu
+               'smtp_pass' => 'pmb@p0lt3k',      // Password gmail kamu
                'smtp_port' => 465,
                'crlf'      => "\r\n",
                'newline'   => "\r\n",
