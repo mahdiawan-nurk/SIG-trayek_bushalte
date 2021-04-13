@@ -104,4 +104,24 @@
         maxZoom:17,
         minZoom:1
     }).addTo(map);
+   var xlng = 0.000256;
+var xlat = 0.000200;
+
+map.on('click', function(e) {
+  console.log(e.latlng.lat,e.latlng.lng);
+  L.marker([e.latlng.lat,e.latlng.lng]).addTo(map);
+  //var c = L.circle([e.latlng.lat,e.latlng.lng], {radius: 15}).addTo(map);
+  // L.polygon([
+  //   [e.latlng.lat-xlat,e.latlng.lng-xlng],
+  //   [e.latlng.lat+xlat,e.latlng.lng-xlng],
+  //   [e.latlng.lat-xlat,e.latlng.lng+xlng],
+  //   [e.latlng.lat+xlat,e.latlng.lng+xlng],
+  // ]).addTo(map);
+  
+  //   L.polyline([
+  //   [e.latlng.lat,e.latlng.lng-xlng],
+  //   [e.latlng.lat,e.latlng.lng+xlng]
+  // ]).addTo(map);
+  
+});
 </script>
