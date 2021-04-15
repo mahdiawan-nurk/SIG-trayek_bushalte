@@ -58,7 +58,10 @@ $route['halte.html'] = 'welcome/halte';
 $route['login.html'] = 'secure';
 $route['registrasi.html'] = 'secure/registrasi';
 $route['lupapass.html'] = 'secure/forgotpass';
+$route['createforgot.html'] = 'secure/forgotSaveToken';
+$route['forgotsavenewPass.html'] = 'secure/forggotnewPass';
 $route['daftarakun.html'] = 'secure/saveregistrasi';
+$route['readmore.html/(:any)'] = 'welcome/readmore';
 //end router frontend
 
 //router admin backend

@@ -12,7 +12,10 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <a class="btn btn-outline-primary btn-sm" href="<?=base_url()?>crud/create_halte" role="button"><i class="fa fa-plus"></i> New Halte</a>
+            <?php if ($this->session->userdata('level')==1): ?>
+                 <a class="btn btn-outline-primary btn-sm" href="<?=base_url()?>crud/create_halte" role="button"><i class="fa fa-plus"></i> New Halte</a>
+            <?php endif ?>
+           
         </div>
         <div class="card-body">
          <table id="bootstrap-data-table-export" class="table table-striped table-bordered">
@@ -23,7 +26,10 @@
                     <th scope="col">Lokasi Halte</th>
                     <th scope="col">Kondisi</th>
                     <th scope="col">gambar</th>
-                    <th scope="col">Act</th>
+                    <?php if ($this->session->userdata('level')==1): ?>
+                      <th scope="col">Act</th>  
+                    <?php endif ?>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -42,7 +48,10 @@
                            <img src="<?=base_url()?>images/halte/<?=$hl->gambar?>" alt="A" style="width: 50%;">
                        <?php endif ?> 
                     </td>
-                    <td><a href="<?=base_url()?>crud/edit_halte?id=<?=$hl->id_halte?>" class="btn btn-sm btn-warning">edit</a></td>
+                    <?php if ($this->session->userdata('level')==1): ?>
+                      <td><a href="<?=base_url()?>crud/edit_halte?id=<?=$hl->id_halte?>" class="btn btn-sm btn-warning">edit</a></td>
+                    <?php endif ?>
+                    
                 </tr>
                 <?php $no++; endforeach ?>
 
@@ -55,7 +64,7 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-header">
-            <strong class="card-title">Basic Table</strong>
+            <strong class="card-title">Peta lokasi halte</strong>
         </div>
         <div class="card-body">
          <div id="vmap" class="vmap" style="height: 620px;"></div>

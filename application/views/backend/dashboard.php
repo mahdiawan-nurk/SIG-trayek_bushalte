@@ -6,7 +6,7 @@
                     </div>
                 </marquee>
             </div>
-
+            <?php $users=getDataUser($this->session->userdata('email'));?>
             <div class="col-lg-6 col-md-6">
                 <aside class="profile-nav alt">
                     <section class="card">
@@ -25,16 +25,16 @@
 
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <a href="#"> <i class="fa fa-envelope-o"></i> E-mail <span class="badge badge-primary pull-right">administrator@maproject.site</span></a>
+                                <a href="#"> <i class="fa fa-envelope-o"></i> E-mail <span class="badge badge-primary pull-right"><?= $this->session->userdata('email'); ?></span></a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#"> <i class="fa fa-tasks"></i> Username <span class="badge badge-danger pull-right">Administrator</span></a>
+                                <a href="#"> <i class="fa fa-tasks"></i> Username <span class="badge badge-danger pull-right"><?= $this->session->userdata('username'); ?></span></a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#"> <i class="fa fa-bell-o"></i> Alamat <span class="badge badge-success pull-right">Jl.Tuanku Tambusai KM 4 No 12</span></a>
+                                <a href="#"> <i class="fa fa-bell-o"></i> Alamat <span class="badge badge-success pull-right"><?=$users->alamat?></span></a>
                             </li>
                             <li class="list-group-item">
-                                <a href="#"> <i class="fa fa-comments-o"></i> Last Login <span class="badge badge-warning pull-right r-activity">senin, 5 April 2021 14:09 </span></a>
+                                <a href="#"> <i class="fa fa-comments-o"></i> Last Login <span class="badge badge-warning pull-right r-activity"><?=lastlogin($users->last_login)?></span></a>
                             </li>
                             <li class="list-group-item">
                                 <a href="#"> <i class="fa fa-cog"></i> Settings</a>

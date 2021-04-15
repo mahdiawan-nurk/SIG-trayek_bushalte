@@ -11,6 +11,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
   <link rel="stylesheet" href="<?=$url;?>assets/css/main.css" />
+  <link rel="stylesheet" href="<?= base_url();?>leaflet/leaflet.css" />
+    <script src="<?= base_url(); ?>leaflet/leaflet.js"></script>
   <style type="text/css" media="screen">
    .button {
     background-color: #4CAF50; /* Green */
@@ -73,12 +75,12 @@
       <!-- Nav -->
       <nav id="nav">
         <ul>
-          <li class="<?=$cls?>"><a href="home.html">Home</a></li>
-          <li class="<?= $uri === 'bus.html' ? "current" : "" ?>" ><a href="bus.html">BUS</a></li>
-          <li class="<?= $uri === 'peta.html' ? "current" : "" ?>"><a href="peta.html">PETA</a></li>
-          <li class="<?= $uri === 'halte.html' ? "current" : "" ?>"><a href="halte.html">Lokasi Halte</a></li>
-          <li ><a href="login.html" class="button1">LOGIN</a></li>
-          <li ><a href="registrasi.html" class="button1">Registrasi</a></li>
+          <li class="<?=$cls?>"><a href="<?=base_url()?>home.html">Home</a></li>
+          <li class="<?= $uri === 'bus.html' ? "current" : "" ?>" ><a href="<?=base_url()?>bus.html">BUS</a></li>
+          <li class="<?= $uri === 'peta.html' ? "current" : "" ?>"><a href="<?=base_url()?>peta.html">PETA</a></li>
+          <li class="<?= $uri === 'halte.html' ? "current" : "" ?>"><a href="<?=base_url()?>halte.html">Lokasi Halte</a></li>
+          <li ><a href="<?=base_url()?>login.html" class="button1">LOGIN</a></li>
+          <li ><a href="<?=base_url()?>registrasi.html" class="button1">Registrasi</a></li>
 
 
         </ul>

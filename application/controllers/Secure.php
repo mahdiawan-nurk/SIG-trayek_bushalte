@@ -32,15 +32,38 @@ class Secure extends CI_Controller {
 		];
 		$cekLogin=$this->master->viewData('users',$login,true)->row_array();
 		if ($cekLogin) {
+			$session = array(
+					'username' =>$cekLogin['username'],
+					'email'=>$cekLogin['email'],
+					'level'=>$cekLogin['level'],
+					'login'=>"LOGIN"
+				);
+				
+				$this->session->set_userdata( $session );
 			if ($cekLogin['level']===1) {
-				$data='is_admin';
+				$data['page']='backend/dashboard';
+				$this->load->view('backend/template',$data);
 			}else{
-				$data='is_users';
+				$data['page']='backend/dashboard';
+				$this->load->view('backend/template',$data);
 			}
 		}else{
-			$data="Akun tidak di temukan";
+			
 		}
-		$this->output->set_content_type('application/json')->set_output(json_encode($data));
+		// $this->output->set_content_type('application/json')->set_output(json_encode($data));
+	}
+
+	function logout()
+	{
+		$lastlogin=[
+			'last_login'=>date('Y-m-d H:i:s')
+		];
+		$this->master->update('users','email',$this->session->userdata('email'),$lastlogin);
+		$data_session = array('email'=>"",'username'=>"",'level'=>"",'login'=>"");
+      	$this->session->unset_userdata($data_session);//clear session
+      	$this->session->sess_destroy();//tutup session
+		redirect(base_url());
+
 	}
 
 	function registrasi($value='')
@@ -55,10 +78,7 @@ class Secure extends CI_Controller {
 			'username' =>$this->input->post('username'),
 			'email'    =>$this->input->post('email'),
 			'alamat'   =>$this->input->post('alamat'),
-			'password' =>[
-				'dekrip' =>$this->input->post('password'),
-				'enkrip' =>md5($this->input->post('password'))
-			],
+			'password' =>md5($this->input->post('password')),
 			'level' =>2
 		];
 		$token=random_string('md5');
@@ -67,11 +87,17 @@ class Secure extends CI_Controller {
 			'token'=>$token,
 			'verifikasi'=>1
 		];
-		$send=$this->sendmail($this->input->post('email'),$token);
+		$send=$this->sendmail($this->input->post('email'),$token,'mailverifikasi');
 		if ($send) {
-			$this->output->set_content_type('application/json')->set_output(json_encode(['akun'=>$registrasi,'verifikasi'=>$verifikasi]));
+			$this->master->create('users',$registrasi,false);
+			$this->master->create('users_verifikasi',$verifikasi,false);
+			$data['type']='registrue';
+			$data['page']='front/pesanregistrasi';
+			$this->load->view('front/awal', $data);
 		}else{
-			echo 'gagal';
+			$data['type']='regisfalse';
+			$data['page']='front/pesanregistrasi';
+			$this->load->view('front/awal', $data);
 		}
 
 		
@@ -79,16 +105,70 @@ class Secure extends CI_Controller {
 
 	function forgotpass($value='')
 	{
+		$data['formforgot']='block';
+		$data['formreset']='none';
 		$data['page']='front/lupapass';
 		$this->load->view('front/awal',$data);
 	}
 
-	function konfirmasiakun($token)
+	function forgotSaveToken()
 	{
-		echo $token;
+		$email=$this->input->post('email');
+		$ceKmail=$this->master->viewData('users',['email'=>$email],true);
+		if ($ceKmail->num_rows()>0) {
+			$token=random_string('md5');
+			$inputtoken=[
+				'email_users'=>$email,
+				'token'=>$token
+			];
+			$this->sendmail($this->input->post('email'),$token,'mailforgot');
+			$this->master->create('users_forgotpass',$inputtoken,false);
+			$data['type']='forgottrue';
+		}else{
+			$data['type']='forgotfalse';
+		}
+		
+		$data['page']='front/pesanregistrasi';
+		$this->load->view('front/awal',$data);
 	}
 
-	function sendmail($email,$token)
+	function forgotformresetPass($token)
+	{
+		$data['data']=$this->master->viewData('users_forgotpass',['token'=>$token],true)->row();
+		$data['formforgot']='none';
+		$data['formreset']='block';
+		$data['page']='front/lupapass';
+		$this->load->view('front/awal',$data);
+	}
+
+	function forggotnewPass()
+	{
+		$update=[
+			'password'=>md5($this->input->post('password'))
+		];
+		$this->master->update('users','email',$this->input->post('email'),$update);
+		$data['type']='forgotnew';
+		$data['page']='front/pesanregistrasi';
+		$this->load->view('front/awal',$data);
+		// $this->output->set_content_type('application/json')->set_output(json_encode($data));
+
+	}
+
+	function konfirmasiakun($token)
+	{
+		$CekToken=$this->master->viewData('users_verifikasi',['token'=>$token],true)->row();
+		$verifikasi=[
+			'verifikasi'=>2
+		];
+
+		$this->db->where('id_verifikasi', $CekToken->id_verifikasi);
+		$this->db->update('users_verifikasi', $verifikasi);
+		$data['page']='front/verifikasi';
+		$this->load->view('front/awal',$data);
+		
+	}
+
+	function sendmail($email,$token,$page)
 	{
 
 		$config = [
@@ -96,8 +176,8 @@ class Secure extends CI_Controller {
 			'charset'   => 'utf-8',
 			'protocol'  => 'smtp',
 			'smtp_host' => 'ssl://smtp.gmail.com',
-               'smtp_user' => 'pmb.poltek@poltek-kampar.ac.id',    // Ganti dengan email gmail kamu
-               'smtp_pass' => 'pmb@p0lt3k',      // Password gmail kamu
+               'smtp_user' => 'sig.trayek001@gmail.com',    // Ganti dengan email gmail kamu
+               'smtp_pass' => 'sig@trayek-12',      // Password gmail kamu
                'smtp_port' => 465,
                'crlf'      => "\r\n",
                'newline'   => "\r\n",
@@ -105,7 +185,7 @@ class Secure extends CI_Controller {
            ];
            $data['token']=$token;
            
-        $htmlContent=$this->load->view('front/mailverifikasi',$data,TRUE);
+        $htmlContent=$this->load->view('front/'.$page,$data,TRUE);
         $this->load->library('email', $config);
         $this->email->from('no-reply@poltek-kampar.ac.id', 'SIG TRAYEK BUS');
         $this->email->to($email); // Ganti dengan email tujuan kamu
