@@ -1,21 +1,8 @@
 <style type="text/css" media="screen">
-	.pagination {
-		display: inline-block;
-		margin-left: 13px;
-	}
-
-	.pagination a {
-		color: black;
-		float: left;
-		padding: 8px 16px;
-		text-decoration: none;
-		background-color: #ffffff;
-		margin:3px;
-		border-bottom: solid 1px #ccc;
-	}
+	
 </style>
 <header class="major">
-	<h2>My Portfolio</h2>
+	<h2>Lokasi Halte</h2>
 </header>
 <div class="container">
 	<div class="row">
@@ -30,26 +17,26 @@
 		<div class="col-4 col-12-medium">
 
 			<!-- Sidebar -->
-			<section class="box" style="    margin-bottom: 0.5em;">
-				<a href="#" class="image featured"><img src="images/pic09.jpg" alt="" /></a>
-				<header>
-					<h3>Sed etiam lorem nulla</h3>
-				</header>
-				<p>Lorem ipsum dolor sit amet sit veroeros sed amet blandit consequat veroeros lorem blandit  adipiscing et feugiat phasellus tempus dolore ipsum lorem dolore.</p>
-				<footer>
-					<a href="#" class="button alt">Lihat titik Lokasi</a>
-				</footer>
-			</section>
+			<?php foreach ($data as $data): ?>
+				<?php $titik=explode(';',$data->kordinat);?>
+				<section class="box" style="    margin-bottom: 0.5em;">
+					<a href="#" class="image featured">
+						<img src="<?=base_url()?>images/halte/<?=$data->gambar?>" alt="a" />
+					</a>
+					<header>
+						<h3><?=$data->nama_halte?></h3>
+					</header>
+					<p>
+						Halte yang terletak Di <?=$data->lokasi_halte?> dengan kordinat <b><?=$data->kordinat?></b>, dengan memiliki kondisi halte yang <?=$data->kondisi_halte?>
+					</p>
+					<footer>
+						<button class="button alt" onclick="look_location(<?=$titik[1]?>,<?=$titik[0]?>,'<?=$data->nama_halte?>')">Lihat titik Lokasi</button>
+					</footer>
+				</section>
+			<?php endforeach ?>
+			
 			<section>
-				<div class="pagination">
-				<a href="#">&laquo;</a>
-				<a href="#" class="current">1</a>
-				<a href="#">2</a>
-				<a href="#">3</a>
-				<a href="#">4</a>
-				<a href="#">5</a>
-				<a href="#">&raquo;</a>
-			</div>
+				<?php echo $pagination; ?>
 			</section>
 			
 
@@ -65,6 +52,35 @@
 		maxZoom:17,
 		minZoom:1
 	}).addTo(map);
-	var marker = L.marker([0.31740026257466575, 101.03310585021973]).addTo(map);
-	marker.bindPopup("<b>DISHUB</b><br>KAMPAR").openPopup();
+	var markers=[
+	<?php foreach ($halte as $d) {
+		$kordinat=explode(';',$d->kordinat);
+		?>
+		[ <?=$kordinat[1]?>, <?=$kordinat[0]?>, "<?=$d->nama_halte?>" ],
+		<?php }?>
+		];
+
+		for (var i = 0; i < markers.length; i++) {
+			marker = new L.marker([markers[i][0],markers[i][1]])
+				.bindPopup(markers[i][2])
+				.addTo(map);
+		}
+
+
+	// var marker = L.marker([0.31740026257466575, 101.03310585021973]).addTo(map);
+	// 
+
+	function look_location(lat,lang,tag) {
+		// var map = L.map('vmap').setView([lat, lang], 17);
+	// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	// 	attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+	// 	maxZoom:17,
+	// 	minZoom:1
+	// }).addTo(map);
+
+	var marker = L.marker([lat, lang]).addTo(map);
+    marker.bindPopup(tag).openPopup();
+    map.flyTo([lat, lang], 17);
+    // alert(lat+' '+lang+' '+tag);
+	}
 </script>

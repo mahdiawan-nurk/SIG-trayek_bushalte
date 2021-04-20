@@ -21,7 +21,8 @@
     <!-- css cdn datatables -->
     <link rel="stylesheet" href="<?=$url?>vendors/datatables.net-bs4/css/dataTables.bootstrap4.min.css">
 
-    <script src="<?=$url?>vendors/jquery/dist/jquery.min.js"></script>
+    <!-- <script src="<?=$url?>vendors/jquery/dist/jquery.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <link rel="stylesheet" href="<?=$url?>assets/css/style.css">
     <link rel="stylesheet" href="<?= base_url();?>leaflet/leaflet.css" />
     <script src="<?= base_url(); ?>leaflet/leaflet.js"></script>

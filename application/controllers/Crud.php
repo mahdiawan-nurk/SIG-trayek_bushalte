@@ -7,6 +7,7 @@ class Crud extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Master_model','master');
 	}
+	//area function crud menu halte
 	function create_halte()
 	{
 		$data['page']='backend/halte/add';
@@ -75,6 +76,13 @@ class Crud extends CI_Controller {
 			$this->master->update('halte','id_halte',$this->input->post('id'),$input);
 			redirect(base_url().'admin/datahalte','refresh');
 		}
+	}
+	//end of area crud halte
+
+	function create_berita()
+	{
+		$data['page']='backend/postingan/add';
+		$this->load->view('backend/template',$data);
 	}
 }
 

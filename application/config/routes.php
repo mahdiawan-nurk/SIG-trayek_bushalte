@@ -61,7 +61,14 @@ $route['lupapass.html'] = 'secure/forgotpass';
 $route['createforgot.html'] = 'secure/forgotSaveToken';
 $route['forgotsavenewPass.html'] = 'secure/forggotnewPass';
 $route['daftarakun.html'] = 'secure/saveregistrasi';
-$route['readmore.html/(:any)'] = 'welcome/readmore';
+$route['readmore.html/(:any)'] = 'welcome/readmore/$1';
+$route['home.html/page/(:num)'] = 'welcome/index/$1'; 
+$route['home.html/page'] = 'welcome/index'; 
+$route['bus.html/page/(:num)'] = 'welcome/bus/$1'; 
+$route['bus.html/page'] = 'welcome/bus'; 
+$route['halte.html/page/(:num)'] = 'welcome/halte/$1'; 
+$route['halte.html/page'] = 'welcome/halte'; 
+
 //end router frontend
 
 //router admin backend

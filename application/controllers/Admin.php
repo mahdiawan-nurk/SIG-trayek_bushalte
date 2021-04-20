@@ -20,12 +20,14 @@ class Admin extends CI_Controller {
 
 	function berita()
 	{
+		$data['berita']=$this->master->viewData('berita',false)->result();
 		$data['page']='backend/postingan/data';
 		$this->load->view('backend/template',$data);
 	}
 
 	function databus()
 	{
+		$data['data']=$this->master->viewData('bus',false)->result();
 		$data['page']='backend/bus/data';
 		$this->load->view('backend/template',$data);
 	}
